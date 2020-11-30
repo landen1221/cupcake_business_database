@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %} Home Page {% endblock %}
+
+{% block container %}
+
+<h1 class="text-center">Welcome Home!!!</h1><hr>
+<div class="row">
+<div class="col-4">
+    <h2>Add a new cupcake</h2>
+    <p>* = required</p>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {% for field in form if field.widget.input_type != 'hidden'%}
+            <p>
+            {{field.label}}
+            {{field}}
+
+            {% for err in field.errors %}
+            {{err}}
+            {% endfor %}
+            </p>
+        {% endfor %}
+        <button id="submit" class="btn btn-success btn-sm">Submit</button>
+    </form>
+</div>
+<div class="col-8">
+    <h2 class="">Cupcakes Currently Available</h2>
+    <ul>
+        {% for cupcake in cupcakes %}
+
+            <li class="mb-1">{{ cupcake.flavor }} (size: {{ cupcake.size }}, rating: {{cupcake.rating}}) &emsp;<a href="{{ cupcake.image }}"><u>Image</u></a>&emsp;  <p class="delete-cupcake d-inline text-danger" data-id="{{cupcake.id}}"><u>Delete</u></p></li>
+        
+            {% endfor %}
+    </ul>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"
+integrity="sha256-T/f7Sju1ZfNNfBh7skWn0idlCBcI3RwdLSS4/I7NQKQ=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+crossorigin="anonymous"></script>
+<script src="static/cupcakes.js"></script>
+{% endblock %}
